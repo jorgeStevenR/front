@@ -1,15 +1,57 @@
-<form (ngSubmit)="crearPersona()">
-  <div>
-    <label>Nombre:</label>
-    <input [(ngModel)]="nuevaPersona.nombre" name="nombre" required>
+<div class="form-container">
+  <h2>{{ nuevaPersona.id ? 'Editar' : 'Crear' }} Persona</h2>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMensaje" class="mensaje-error">
+    {{ errorMensaje }}
   </div>
-  <div>
-    <label>Apellido:</label>
-    <input [(ngModel)]="nuevaPersona.apellido" name="apellido" required>
+
+  <form (ngSubmit)="crearPersona()">
+    <!-- Campos del formulario -->
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input 
+        [(ngModel)]="nuevaPersona.nombre" 
+        name="nombre" 
+        placeholder="Ej: Juan" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Apellido:</label>
+      <input 
+        [(ngModel)]="nuevaPersona.apellido" 
+        name="apellido" 
+        placeholder="Ej: Pérez" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Correo:</label>
+      <input 
+        [(ngModel)]="nuevaPersona.correo" 
+        name="correo" 
+        type="email" 
+        placeholder="Ej: juan@example.com" 
+        required
+      >
+    </div>
+
+    <!-- Botones -->
+    <div class="button-group">
+      <button type="submit" class="btn-guardar">
+        {{ nuevaPersona.id ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button type="button" class="btn-cancelar" (click)="router.navigate(['/lista'])">
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <!-- Mensaje de éxito -->
+  <div *ngIf="mostrarMensajeExito" class="mensaje-exito">
+    ¡Persona creada exitosamente! ✅
   </div>
-  <div>
-    <label>Correo:</label>
-    <input [(ngModel)]="nuevaPersona.correo" name="correo" type="email" required>
-  </div>
-  <button type="submit">Guardar</button>
-</form>
+</div>

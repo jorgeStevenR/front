@@ -1,0 +1,117 @@
+.form-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #34495e;
+      font-weight: 500;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #bdc3c7;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+
+      &:focus {
+        border-color: #3498db;
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #95a5a6;
+      }
+    }
+  }
+
+  .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+
+    button {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: opacity 0.3s;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .btn-guardar {
+    background: #27ae60; /* Verde */
+    color: white;
+  }
+
+  .btn-cancelar {
+    background: #e74c3c; /* Rojo */
+    color: white;
+  }
+
+  .mensaje-exito {
+    margin-top: 20px;
+    padding: 15px;
+    background: #2ecc71;
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  /* crear-persona.component.scss */
+
+/* Mensaje de Error */
+.mensaje-error {
+  margin: 15px 0;
+  padding: 12px;
+  background: #e74c3c;  /* Rojo */
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Mensaje de Éxito */
+.mensaje-exito {
+  margin: 15px 0;
+  padding: 12px;
+  background: #2ecc71;  /* Verde */
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+/* Animación común */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+}
