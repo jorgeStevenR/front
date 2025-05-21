@@ -1,22 +1,66 @@
-<h2>Lista de Personas</h2>
+<div class="container">
+  <h2>Lista de Personas</h2>
+  <a routerLink="/crear" class="btn-crear">Crear Nueva Persona</a>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Nombre</th>
-      <th>Email</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let persona of personas">
-      <td>{{ persona.id }}</td>
-      <td>{{ persona.nombre }}</td>
-      <td>{{ persona.email }}</td>
-      <td>
-        <button (click)="eliminarPersona(persona.id)">Eliminar</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div *ngIf="personas.length === 0" class="mensaje-vacio">
+    No hay personas registradas.
+  </div>
+
+  <table *ngIf="personas.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Correo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let persona of personas">
+        <td>{{ persona.id }}</td>
+        
+        <!-- Campo Nombre -->
+        <td>
+          <span *ngIf="personaEditando?.id !== persona.id">{{ persona.nombre }}</span>
+          <input *ngIf="personaEditando?.id === persona.id" 
+                 [(ngModel)]="personaEditando!.nombre"> <!-- ¡Aquí el fix! -->
+        </td>
+        
+        <!-- Campo Apellido -->
+        <td>
+          <span *ngIf="personaEditando?.id !== persona.id">{{ persona.apellido }}</span>
+          <input *ngIf="personaEditando?.id === persona.id" 
+                 [(ngModel)]="personaEditando!.apellido"> <!-- ¡Aquí el fix! -->
+        </td>
+        
+        <!-- Campo Correo -->
+        <td>
+          <span *ngIf="personaEditando?.id !== persona.id">{{ persona.correo }}</span>
+          <input *ngIf="personaEditando?.id === persona.id" 
+                 [(ngModel)]="personaEditando!.correo"> <!-- ¡Aquí el fix! -->
+        </td>
+        
+        <!-- Botones de Acción -->
+        <td>
+          <button *ngIf="personaEditando?.id !== persona.id" 
+                  (click)="editarPersona(persona)" 
+                  class="btn-editar">
+            Editar
+          </button>
+          
+          <button *ngIf="personaEditando?.id === persona.id" 
+                  (click)="guardarCambios()" 
+                  class="btn-guardar">
+            Guardar
+          </button>
+          
+          <button (click)="eliminarPersona(persona.id!)" 
+                  class="btn-eliminar">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

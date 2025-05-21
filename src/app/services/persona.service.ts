@@ -1,32 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Persona } from '../models/persona'; // Asegúrate de que la ruta del modelo sea correcta
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PersonaService {
-  private apiUrl = 'https://crud-udqj.onrender.com/personas'; // Ajusta si tu endpoint es diferente
+  private apiUrl = 'https://crud-udqj.onrender.com/api/persona'; // URL base del backend
 
   constructor(private http: HttpClient) { }
 
   // Obtener todas las personas
-  getPersonas(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getPersonas(): Observable<Persona[]> {
+    return this.http.get<Persona[]>(`${this.apiUrl}/ListaDePersonas`);
   }
 
   // Crear persona
-  createPersona(persona: any): Observable<any> {
-    return this.http.post(this.apiUrl, persona);
+  createPersona(persona: Persona): Observable<Persona> {
+    return this.http.post<Persona>(`${this.apiUrl}/guardar`, persona);
   }
 
   // Actualizar persona
-  updatePersona(id: number, persona: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, persona);
+  updatePersona(id: number, persona: Persona): Observable<Persona> {
+    return this.http.put<Persona>(`${this.apiUrl}/actualizar/${id}`, persona);
   }
 
   // Eliminar persona
-  deletePersona(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  deletePersona(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/eliminarPersona/${id}`);
   }
 }

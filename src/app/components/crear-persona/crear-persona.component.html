@@ -1,0 +1,15 @@
+<form (ngSubmit)="crearPersona()">
+  <div>
+    <label>Nombre:</label>
+    <input [(ngModel)]="nuevaPersona.nombre" name="nombre" required>
+  </div>
+  <div>
+    <label>Apellido:</label>
+    <input [(ngModel)]="nuevaPersona.apellido" name="apellido" required>
+  </div>
+  <div>
+    <label>Correo:</label>
+    <input [(ngModel)]="nuevaPersona.correo" name="correo" type="email" required>
+  </div>
+  <button type="submit">Guardar</button>
+</form>
