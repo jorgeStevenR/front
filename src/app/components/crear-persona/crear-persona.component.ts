@@ -23,8 +23,13 @@ export class CrearPersonaComponent {
 
   constructor(
     private personaService: PersonaService,
-    public router: Router
+    private router: Router // Cambiado a private
   ) {}
+
+  // Método nuevo añadido
+  cancelar(): void {
+    this.router.navigate(['/lista']);
+  }
 
   crearPersona(): void {
     this.errorMensaje = null;

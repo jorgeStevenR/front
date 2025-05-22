@@ -1,4 +1,7 @@
 <div class="form-container">
+  <!-- Flecha de regreso (siempre visible) -->
+  <button class="flecha-regreso" (click)="cancelar()">←</button>
+
   <h2>{{ nuevaPersona.id ? 'Editar' : 'Crear' }} Persona</h2>
 
   <!-- Mensaje de error -->
@@ -7,7 +10,6 @@
   </div>
 
   <form (ngSubmit)="crearPersona()">
-    <!-- Campos del formulario -->
     <div class="form-group">
       <label>Nombre:</label>
       <input 
@@ -39,19 +41,22 @@
       >
     </div>
 
-    <!-- Botones -->
     <div class="button-group">
       <button type="submit" class="btn-guardar">
         {{ nuevaPersona.id ? 'Actualizar' : 'Guardar' }}
       </button>
-      <button type="button" class="btn-cancelar" (click)="router.navigate(['/lista'])">
+      <button type="button" class="btn-cancelar" (click)="cancelar()">
         Cancelar
       </button>
     </div>
   </form>
 
-  <!-- Mensaje de éxito -->
+  <!-- Mensaje de éxito con botón de regreso -->
   <div *ngIf="mostrarMensajeExito" class="mensaje-exito">
-    ¡Persona creada exitosamente! ✅
+    <p>¡Persona creada exitosamente! ✅</p>
+    <button class="btn-regresar" href="localhost:4200">
+      ← Volver a la lista
+      
+    </button>
   </div>
 </div>

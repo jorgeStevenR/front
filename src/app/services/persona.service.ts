@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Persona } from '../models/persona'; // Asegúrate de que la ruta del modelo sea correcta
+import { Persona } from '../models/persona';
 
 @Injectable({ providedIn: 'root' })
 export class PersonaService {
-  private apiUrl = 'https://crud-udqj.onrender.com/api/persona'; // URL base del backend
+  private apiUrl = 'https://crud-udqj.onrender.com/api/persona';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // Obtener todas las personas
   getPersonas(): Observable<Persona[]> {
@@ -27,5 +27,20 @@ export class PersonaService {
   // Eliminar persona
   deletePersona(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/eliminarPersona/${id}`);
+  }
+
+  // Obtener persona por id
+  getPersona(id: number): Observable<Persona> {
+    return this.http.get<Persona>(`${this.apiUrl}/obtenerPorId/${id}`);
+  }
+
+  // Método para generar PDF y enviar email
+  generarPdfYEnviarEmail(id: number, correoDestino: string): Observable<string> {
+    const params = new HttpParams().set('correoDestino', correoDestino);
+    return this.http.post(
+      `${this.apiUrl}/generar-pdf/${id}/enviar-email`,
+      null, // No body, solo query params
+      { params, responseType: 'text' }
+    );
   }
 }

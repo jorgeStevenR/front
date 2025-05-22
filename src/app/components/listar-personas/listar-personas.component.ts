@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PersonaService } from '../../services/persona.service';
-import { Persona } from '../../models/persona'; // Asegurar extensión .model
+import { Persona } from '../../models/persona'; 
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-listar-personas',
@@ -16,6 +17,10 @@ export class ListarPersonasComponent implements OnInit {
   personas: Persona[] = [];
   personaEditando: Persona | null = null;
 
+  // Variables para el formulario manual de envío PDF
+  idEnviarPdf: number | null = null;
+  correoEnviarPdf: string = '';
+
   constructor(private personaService: PersonaService) {}
 
   ngOnInit(): void {
@@ -24,22 +29,26 @@ export class ListarPersonasComponent implements OnInit {
 
   cargarPersonas(): void {
     this.personaService.getPersonas().subscribe({
-      next: (data) => this.personas = data,
+      next: (data) => {
+        console.log('Personas cargadas:', data);  
+        this.personas = data;
+      },
       error: (err) => console.error('Error al cargar:', err)
     });
   }
 
   eliminarPersona(id: number): void {
-    if (confirm('¿Eliminar persona?')) {
-      this.personaService.deletePersona(id).subscribe({
-        next: () => this.cargarPersonas(),
-        error: (err) => console.error('Error al eliminar:', err)
-      });
-    }
+    this.personaService.deletePersona(id).subscribe({
+      next: () => {
+        console.log('Eliminado correctamente, recargando lista...');
+        this.cargarPersonas();
+      },
+      error: (err) => console.error('Error al eliminar:', err)
+    });  
   }
 
   editarPersona(persona: Persona): void {
-    this.personaEditando = { ...persona }; // Clonación correcta
+    this.personaEditando = { ...persona };
   }
 
   guardarCambios(): void {
@@ -55,5 +64,34 @@ export class ListarPersonasComponent implements OnInit {
         error: (err) => console.error('Error al actualizar:', err)
       });
     }
+  }
+
+  enviarPdfPorEmail(id: number, correo: string) {
+    if (!correo) {
+      alert('La persona no tiene correo asignado');
+      return;
+    }
+
+    this.personaService.generarPdfYEnviarEmail(id, correo).subscribe({
+      next: (mensaje) => alert(mensaje),
+      error: (err) => {
+        console.error('Error enviando PDF:', err);
+        alert('Error enviando el PDF. Intenta nuevamente.');
+      }
+    });
+  }
+
+  // Método para enviar PDF usando el formulario manual
+  enviarPdfPorEmailManual() {
+    if (this.idEnviarPdf == null || this.idEnviarPdf <= 0) {
+      alert('Por favor ingresa un ID válido');
+      return;
+    }
+    if (!this.correoEnviarPdf || this.correoEnviarPdf.trim() === '') {
+      alert('Por favor ingresa un correo válido');
+      return;
+    }
+
+    this.enviarPdfPorEmail(this.idEnviarPdf, this.correoEnviarPdf);
   }
 }

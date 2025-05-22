@@ -24,21 +24,21 @@
         <td>
           <span *ngIf="personaEditando?.id !== persona.id">{{ persona.nombre }}</span>
           <input *ngIf="personaEditando?.id === persona.id" 
-                 [(ngModel)]="personaEditando!.nombre"> <!-- ¡Aquí el fix! -->
+                 [(ngModel)]="personaEditando!.nombre">
         </td>
         
         <!-- Campo Apellido -->
         <td>
           <span *ngIf="personaEditando?.id !== persona.id">{{ persona.apellido }}</span>
           <input *ngIf="personaEditando?.id === persona.id" 
-                 [(ngModel)]="personaEditando!.apellido"> <!-- ¡Aquí el fix! -->
+                 [(ngModel)]="personaEditando!.apellido">
         </td>
         
         <!-- Campo Correo -->
         <td>
           <span *ngIf="personaEditando?.id !== persona.id">{{ persona.correo }}</span>
           <input *ngIf="personaEditando?.id === persona.id" 
-                 [(ngModel)]="personaEditando!.correo"> <!-- ¡Aquí el fix! -->
+                 [(ngModel)]="personaEditando!.correo">
         </td>
         
         <!-- Botones de Acción -->
@@ -63,4 +63,22 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- Formulario para enviar PDF por email manualmente -->
+  <div class="enviar-pdf-form" style="margin-top: 30px; max-width: 400px; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
+    <h3>Enviar PDF por Email</h3>
+    <label>
+      ID de Persona:
+      <input type="number" [(ngModel)]="idEnviarPdf" placeholder="Ingresa ID" />
+    </label>
+    <br /><br />
+    <label>
+      Correo Destino:
+      <input type="email" [(ngModel)]="correoEnviarPdf" placeholder="Ingresa correo" />
+    </label>
+    <br /><br />
+    <button (click)="enviarPdfPorEmailManual()" class="btn-enviar-pdf" style="background-color: #2196F3; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+      Enviar PDF
+    </button>
+  </div>
 </div>

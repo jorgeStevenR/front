@@ -1,1 +1,61 @@
-<p>editar-crear-persona works!</p>
+<div class="form-container">
+  <!-- Flecha de regreso -->
+  <button class="flecha-regreso" (click)="cancelar()">←</button>
+
+  <h2>{{ persona.id ? 'Editar' : 'Crear' }} Persona</h2>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMensaje" class="mensaje-error">
+    {{ errorMensaje }}
+  </div>
+
+  <form (ngSubmit)="guardarPersona()">
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input 
+        [(ngModel)]="persona.nombre" 
+        name="nombre" 
+        placeholder="Ej: Juan" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Apellido:</label>
+      <input 
+        [(ngModel)]="persona.apellido" 
+        name="apellido" 
+        placeholder="Ej: Pérez" 
+        required
+      >
+    </div>
+
+    <div class="form-group">
+      <label>Correo:</label>
+      <input 
+        [(ngModel)]="persona.correo" 
+        name="correo" 
+        type="email" 
+        placeholder="Ej: juan@example.com" 
+        required
+      >
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn-guardar">
+        {{ persona.id ? 'Actualizar' : 'Guardar' }}
+      </button>
+      <button type="button" class="btn-cancelar" (click)="cancelar()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <!-- Mensaje de éxito -->
+  <div *ngIf="mostrarMensajeExito" class="mensaje-exito">
+    <p>¡Persona {{ persona.id ? 'actualizada' : 'creada' }} exitosamente! ✅</p>
+    <button class="btn-regresar" (click)="cancelar()">
+      ← Volver a la lista
+    </button>
+  </div>
+</div>
